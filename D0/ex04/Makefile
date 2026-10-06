@@ -2,13 +2,13 @@ MCU=atmega328p
 CC=avr-gcc
 OBJCOPY=avr-objcopy
 AVRDUDE=avrdude
-CFLAGS=-g -mcall-prologues -mmcu=$(MCU) -Os
+CFLAGS= -mcall-prologues -mmcu=$(MCU) -Os
 TARGET=main
 
-LDFLAGS= -Wl,-gc-sections -Wl,-relax
+LDFLAGS=-Wl,-relax
 F_CPU=16000000UL
 BAUD=115200
-PORT= /dev/ttyUSB0
+PORT=/dev/ttyUSB0
 
 all: hex flash
 

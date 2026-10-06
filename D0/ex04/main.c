@@ -7,17 +7,15 @@
 int main(void){
 
     // Configuration en mode sortie des 4 LED
-    DDRB |= (1 << DDB0) |  (1 << DDB1) | (1 << DDB2) | (1 << DDB4); 
+    DDRB |= (1 << DDB0) |  (1 << DDB1) | (1 << DDB2) | (1 << DDB4); // mets les pins 0,1,2,4 du Port B en sortie 
 
-    DDRD &= ~(1 << DDD2);  // Configuration en mode Entree (0 en binaire) du port 1
-    DDRD &= ~(1 << DDD4); // Configuration en mode Entree (0 en binaire) du port 1
-    PORTD |= (1 << PORTD2);
-    PORTD |= (1 << PORTD4);
+    DDRD &= ~(1 << DDD2) & ~(1 << DDD4);  // met les pins 2 et 4 du Port D en entree (en 0)
+    PORTD |= (1 << PORTD2) | (1 << PORTD4); // evite l'effet pull up sur les boutons 2 et 4 
 
     
-    int compteur  = 0;
-    int btn1_precedent = 0;
-    int btn2_precedent = 0;
+    int compteur  = 0;  // compteur allant de 0 a 15 pour tous les hexa
+    int btn1_precedent = 0; // gestion des bouttons comme sr l'exo 3
+    int btn2_precedent = 0; //gestion des boutons comme sur l'exo 3
 
     while(1)
     {   
@@ -78,7 +76,7 @@ int main(void){
         PORTB &= ~(1 << PORTB2); // Éteint PB2 si le bit 2 vaut 0
         }
 
-        // --- ÉTAPE 4 : Gestion de la LED 4 (Bit 3 du com)
+        // Gestion de la LED 4 (Bit 3 du com)
         if ((compteur >> 3) & 1) {
             PORTB |= (1 << PORTB4);  // Allume PB4 si le bit 3 vaut 1
         } else {
