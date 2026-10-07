@@ -1,4 +1,3 @@
-#include "F_cpu.h"
 #include <avr/io.h>
 #include <util/delay.h>
 

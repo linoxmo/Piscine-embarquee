@@ -2,7 +2,7 @@ MCU=atmega328p
 CC=avr-gcc
 OBJCOPY=avr-objcopy
 AVRDUDE=avrdude
-CFLAGS= -mcall-prologues -mmcu=$(MCU) -Os
+CFLAGS= -DF_CPU=$(F_CPU) -mcall-prologues -mmcu=$(MCU) -Os
 TARGET=main
 
 LDFLAGS=-Wl,-relax
