@@ -3,24 +3,20 @@
 
 int main(void){
 
-    DDRB |= (1 << DDB0); // Configuration en mode SORTIE (1 en binaire) de la broche 0 du Port B
-    DDRD &= ~(1 << DDD2); // Configuration en mode Entree (0 en binaire) de la broche 2 d Port D
-    // On prend le chiffre 1 en binaire (00000001) et on décale le bit de 2 positions vers la gauche. On obtient le masque binaire suivant : 00000100
-    PORTD |= (1 << PORTD2); // evite l'effet pull up en allumant une resistance
-    // On prend le chiffre 1 en binaire (00000001) et on décale le bit de 2 positions vers la gauche. On obtient le masque binaire suivant : 00000100
+    DDRB |= (1 << DDB0); 
+    // Configuration in exit mode (1) of Port B's pin 0 
+    DDRD &= ~(1 << DDD2); 
+    // Configuration in entry mode (0) of Port D's pin 2 
+    PORTD |= (1 << PORTD2); 
+    // Turn on the resistance of the button 1( on pin 2) to neglect pull up effect
+    
     while(1)
     {   
-        /* On utilise PINB pour lire l'etat d'un Pin*/
-        if (!(PIND & (1 << PIND2))) 
-        {
+        // Read the Button states with PIND 
+        if (!(PIND & (1 << PIND2))) // ==  If the button is pressed
             PORTB |= (1 << PORTB0);
-        /* Allumage du port 0 */
-        }
         else
-            {
             PORTB &= ~(1 << PORTB0);
-            /* Eteint le port 0 */
-            }
         
     }
     return (0);

@@ -5,12 +5,17 @@
 
 int main(void){
 
-    DDRB |= (1 << DDB0); // Configuration en mode SORTIE (1 en binaire) du port 0  
-    DDRD &= ~(1 << DDD2); // Configuration en mode Entree (0 en binaire) du port 1
-    PORTD |= (1 << PORTD2); // evite l'effet pull up
+    DDRB |= (1 << DDB0); 
+    // Configuration in exit mode (1) of Port B's pin 0 
+    DDRD &= ~(1 << DDD2); 
+    // Configuration in entry mode (0) of Port D's pin 2 
+    PORTD |= (1 << PORTD2); 
+    // Turn on the resistance of the button 1( on pin 2) to neglect pull up effect
 
-    bool s = false; //
-    int btn_precedent = 0; //sauvegarde l'etat precedent du bouton, 0 = pas enfonce, 1 = enfonce
+    bool s = false; 
+    // Flag to save the current state of the led ( up or down)
+    int btn_precedent = 0; 
+    // Flag to save the state of the btn before: 0 = not pressed, 1 = pressed
 
     while(1)
     {   
@@ -18,23 +23,20 @@ int main(void){
 
         if (btn_now && !btn_precedent) 
         {
-            _delay_ms(20); //temporise d 20ms
+            _delay_ms(20); // delay to prevent the rebound effect
             
-            btn_precedent = 1; // btn_d'avant devient enfonce
+            btn_precedent = 1; // last button state is
         }
 
         if (!btn_now && btn_precedent) {
-            _delay_ms(20); // Temporisation de 20ms
-            s = !s; 
-            if (s) {
-                // On a détecté la fermeture et l'ouverture du BP
+            _delay_ms(20); // delay to prevent the rebound effect
+            s = !s; // new state of the led
+
+            if (s) 
                 PORTB |= (1 << PORTB0);
-            }
-            else {
-                // On a détecté la fermeture et l'ouverture du BP
+            else
                 PORTB &= ~(1 << PORTB0);
-            }
-            btn_precedent = 0; // On mémorise que le bouton est relâché
+            btn_precedent = 0; 
         }
 
     }
