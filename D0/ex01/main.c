@@ -4,8 +4,7 @@
 int main(void)
 {
     DDRB |= (1 << DDB0);
-    /* Configuration en mode SORTIE ( 1 en binaire ) de la broche ) du Port B
-    */
+    // Configuration in exit mode (1) of Port B's pin 0 
     PORTB |= (1 << PORTB0);
-    /* Allumage du port 0 en  mode 1 (5 v) */
+    // Turn on port 0 in  mode 1 (5 v) 
 }
