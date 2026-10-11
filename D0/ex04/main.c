@@ -11,7 +11,7 @@ void ft_bin(int count) {
     // Bit 2 goes to PORTB2
     if (count & (1 << 2)) PORTB |= (1 << PORTB2); else PORTB &= ~(1 << PORTB2);
     
-    // Bit 3 jumps directly to PORTB4
+    // Bit 3 goes to PORTB4
     if (count & (1 << 3)) PORTB |= (1 << PORTB4); else PORTB &= ~(1 << PORTB4);
 }
 
