@@ -1,5 +1,5 @@
 #include <avr/io.h>
-#include <avr/interrupt.h>
+#include "Ft_ISR.h"
 
 #define F_CPU 16000000UL    
 #define UART_BAUDRATE 115200
@@ -25,9 +25,6 @@ void uart_init(void) {
 
 char uart_rx(void)
 {
-    unsigned char status, resh, resl;
-    while (! (UCSR0A & (1<<RXC0)))
-        ;
     return UDR0;
 }
 
@@ -39,15 +36,14 @@ void uart_tx(char c) {
     UDR0 = TRANSFORM(c);
 }
 
-void USART_RX_vect(void){
+FT_ISR(__vector_18){
     uart_tx(uart_rx());
-    SREG |= ( 1 << 7);
 }
 
 int main(){
-    SREG &= ~( 1 << 7);
+    cli();
     uart_init();
-    SREG |= ( 1 << 7);
+    sei();
     while(1) {
     }
 }

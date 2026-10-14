@@ -1,32 +1,20 @@
 #include <avr/io.h>
 
-
-#include <avr/io.h>
-
 void delay_half_second(void) {
-    uint16_t count = 40000; // Outer loop counter
-    uint8_t inner = 25;     // Inner loop counter
+    volatile uint32_t i = 380952UL; 
 
-    // With 16-bit registers, 'sbiw' (2 cycles) + 'brne' (2 cycles) = 4 cycles/loop.
-    // To get 0.5s at 16MHz, we need 8,000,000 cycles.
-    // Since 8,000,000 / 4 = 2,000,000,
-    // we use an outer 8-bit loop of 40 iterations.
-    // 2,000,000 / 40 = 50,000 iterations for the inner 16-bit loop.
+    /*
+    Charge the 4 bytes in the registre : lds *4 cycles
+    Copi the 4 bytes for decrementation : mov * 4 cycles
+    Soustraction with saving on 32 bits : sbci * 4 cycles
+    Write the new result : sts * 4 cycles
+    Test if the value == to 0  3 * or ( combine Bite 0 with 1, 2, 3)
+    If result not true,do the loop agin, brne *(1/2) cylces 
+    */
     
-    uint16_t i_count;
-    uint8_t o_count = 40; // Outer loop (40 times)
-
-    asm volatile (
-        "outer_loop%=:\n\t"
-        "ldi %A0, 50000 & 255\n\t" // Load low byte of 50000
-        "ldi %B0, 50000 >> 8\n\t"  // Load high byte of 50000
-        "inner_loop%=:\n\t"
-        "sbiw %A0, 1\n\t"          // 2 cycles
-        "brne inner_loop%=\n\t"    // 2 cycles (1 if final)
-        "dec %1\n\t"               // 1 cycle
-        "brne outer_loop%=\n\t"    // 2 cycles
-        : "=&w" (i_count), "+r" (o_count)
-    );
+    while (i--) {
+        ; 
+    }
 }
 
 int main(void) {

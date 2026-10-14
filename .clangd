@@ -1,0 +1,10 @@
+CompileFlags:
+  # Allow clangd to query avr-gcc to find system include paths automatically
+  Compiler: /usr/lib64/ccache/avr-gcc  # Or path like /opt/homebrew/bin/avr-gcc on macOS
+  Add:
+    - -xc
+    - --target=avr
+    - -mmcu=atmega328p    # Replace with your target MCU (e.g., attiny85)
+    - -D__AVR_ATmega328p__ # Match the preprocessor define for your MCU
+    - -std=gnu99
+    - -DF_CPU=16000000UL   # Set your CPU frequency
